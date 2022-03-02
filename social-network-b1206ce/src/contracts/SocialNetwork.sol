@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.12;
 
 contract SocialNetwork {
     string public name;
@@ -26,7 +27,7 @@ contract SocialNetwork {
         address payable author
     );
 
-    constructor() public { 
+    constructor() { 
         name = "Dapp University Social Network";
     }
 
@@ -36,9 +37,9 @@ contract SocialNetwork {
         // Increment the post count
         postCount ++;
         // Create the post
-        posts[postCount] = Post(postCount, _content, 0, msg.sender);
+        posts[postCount] = Post(postCount, _content, 0,payable(msg.sender));
         // Trigger event
-        emit PostCreated(postCount, _content, 0, msg.sender);
+        emit PostCreated(postCount, _content, 0, payable(msg.sender));
     }
 
     function tipPost(uint _id) public payable {
@@ -49,7 +50,7 @@ contract SocialNetwork {
         // Fetch the author
         address payable _author = _post.author;
         // Pay the author by sending them Ether
-        address(_author).transfer(msg.value);
+        payable(address(_author)).transfer(msg.value);
         // Incremet the tip amount
         _post.tipAmount = _post.tipAmount + msg.value;
         // Update the post

@@ -1,9 +1,10 @@
-pragma solidity ^0.5.16;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.12;
 
 contract SocialNetwork {
     string public name;
 
-    constructor() public {
+    constructor() {
         name = "I am the best";
     }
 }
